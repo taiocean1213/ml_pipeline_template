@@ -1,10 +1,14 @@
+import logging
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from abc import ABC, abstractmethod
+
 
 class FlaskApp:
     """
     Responsible for initializing the Flask application instance.
     """
+
     def __init__(self, app_name):
         """
         Initializes a FlaskApp object with the given app_name.
@@ -16,4 +20,3 @@ class FlaskApp:
             None
         """
         self.app = Flask(app_name)
-

@@ -2,46 +2,60 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 from apiHandler.corsSetup import CorsSetup
-from apiHandler.messageGenerator import MessageGenerator
+from apiHandler.messageGeneratorImpl import MessageGeneratorImpl
 from apiHandler.flaskApp import FlaskApp
-from apiHandler.requestHandler import RequestHandler 
-from apiHandler.requestMethodHandler import RequestMethodHandler
+from apiHandler.requestHandlerImpl import RequestHandlerImpl
 
 class RequestListener:
     """
     Handles the HTTP request and returns the result.
     """
+
+
     def __init__(self, app_name: str, message: str) -> None:
         """
-        Initializes a RequestListener object with the given app_name and message.
+        Initializes a RequestListener object with the
+        given app_name and message.
+
 
         Args:
-            app_name (str): The name of the Flask application instance.
-            message (str): The message to be returned.
+        app_name (str): The name of the Flask application instance.
+        message (str): The message to be returned.
+
 
         Returns:
-            None
+        None
         """
-        self.flask_app = FlaskApp(app_name)
-        self.cors_setup = CorsSetup(self.flask_app.app)
-        self.request_handler = RequestHandler(message)
-        self.request_method_handler = RequestMethodHandler()
-        self.message_generator = MessageGenerator(message)
+        self.app_name = app_name
+        # Create an instance of MessageGeneratorImpl with the given message
+        self.message_generator = MessageGeneratorImpl(message)
+        # Create an instance of RequestHandlerImpl with the message generator
+        self.request_handler = RequestHandlerImpl(self.message_generator)
 
-        self.cors_setup.setup_cors()
-    
-    def handle_request(self) -> jsonify:
+
+    def start(self):
         """
-        Handles the HTTP request and returns the result back to the frontend.
+        Starts the Flask application and listens for
+        incoming HTTP requests.
+
 
         Returns:
-            JSON response: A JSON response containing the message to be returned.
+        None
         """
-        if request.method == 'GET':
-            received_message = self.request_method_handler.get_received_message()
-        elif request.method == 'POST':
-                        received_message = self.request_method_handler.get_received_message_json()
+        # Create an instance of the Flask application
+        app = FlaskApp(self.app_name).app
+        # Setup CORS (Cross-Origin Resource Sharing)
+        cors_setup = CorsSetup(app)
+        cors_setup.setup_cors()
 
-        returned_message = self.message_generator.generate_returned_message(received_message)
+
+        @app.route('/', methods=['GET', 'POST'])
+        def handle_request():
+            # Call the handle_request method of the request_handler
+            return self.request_handler.handle_request()
+
+
+        # Run the Flask application
+        app.run()
         
-        return jsonify(message=returned_message)
+        return
