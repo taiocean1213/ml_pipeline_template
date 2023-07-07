@@ -26,7 +26,7 @@ class RequestHandlerImpl(RequestHandler):
         # the Flask application
         self.message_generator = message_generator
 
-    def handle_request(self):
+    def handle_request(self) -> None:
         """
         Handles the HTTP request and returns the result 
         back to the frontend.
@@ -60,21 +60,21 @@ class RequestHandlerImpl(RequestHandler):
                 error="An error occurred while handling the request."
                 )
     
-    def get_received_message(self):
+    def get_received_message(self) -> dict:
         """
         Retrieves the received message from the request query 
         parameters or JSON body.
 
         Returns:
-            str: The received message.
+            dict: The received message as a dictionary.
         """
         # Check the HTTP method of the request
         if request.method == 'GET':
             # If the method is GET, retrieve the 'username' 
             # parameter from the request query parameters
-            return request.args.get('username')
+            return request.args.to_dict()
         
         elif request.method == 'POST':
             # If the method is POST, retrieve the 'username' 
             # value from the JSON body of the request
-            return request.json.get('username')
+            return request.json

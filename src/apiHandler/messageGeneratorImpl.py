@@ -28,15 +28,19 @@ class MessageGeneratorImpl(MessageGenerator):
         Generates the returned message based on the received message.
 
         Args:
-            received_message (str): The received message.
+            received_message (dict): The received json object as a dict.
 
         Returns:
             str: The generated returned message.
         """
-        if received_message is not None:
+        
+        # extract the username
+        username = received_message['username']
+        
+        if username is not None:
             # If a received message is provided, 
             # concatenate it with the self.message
-            returned_message = self.message + ' ' + received_message
+            returned_message = self.message + ' ' + username
         else:
             # If no received message is provided, 
             # use only the self.message
