@@ -33,11 +33,13 @@ class RequestListener:
         self.request_handler = RequestHandlerImpl(self.message_generator)
 
 
-    def start(self):
+    def start(self, host: str = "0.0.0.0", port: int = 5000):
         """
-        Starts the Flask application and listens for
-        incoming HTTP requests.
+        Starts the Flask application and listens for incoming HTTP requests.
 
+        Args:
+        - host (str): The host IP address to bind the application to. Default is "0.0.0.0".
+        - port (int): The port number to listen on. Default is 5000.
 
         Returns:
         None
@@ -48,14 +50,12 @@ class RequestListener:
         cors_setup = CorsSetup(app)
         cors_setup.setup_cors()
 
-
         @app.route('/', methods=['GET', 'POST'])
         def handle_request():
             # Call the handle_request method of the request_handler
             return self.request_handler.handle_request()
 
-
         # Run the Flask application
-        app.run()
-        
+        app.run(host=host, port=port)
+
         return
