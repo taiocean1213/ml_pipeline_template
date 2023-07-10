@@ -6,6 +6,11 @@ from abc import ABC, abstractmethod
 
 from apiHandler.messageGenerator import MessageGenerator
 
+'''
+Modify this file as the implementation of the ML inferencing service
+
+'''
+
 class MessageGeneratorImpl(MessageGenerator):
     """
     Implementation of MessageGenerator interface.
