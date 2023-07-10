@@ -11,8 +11,8 @@ def main() -> None:
     # Get the absolute path of the current directory
     current_dir = os.path.dirname(os.path.abspath(__file__))
     
-    # Get the absolute path of the parent directory (one level up)
-    parent_dir = os.path.dirname(current_dir)
+    # Get the absolute path of the parent directory (two level up)
+    parent_dir = os.path.dirname(os.path.dirname(current_dir))
     
     # Construct the absolute path to the assets folder
     modelPath = os.path.join(parent_dir, models_folder)

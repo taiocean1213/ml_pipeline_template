@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 # ML model folder contents
-/assets/models
+/assets
