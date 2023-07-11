@@ -27,23 +27,37 @@ The ML Pipeline Template is designed to streamline the development and deploymen
 
 ## Installation
 
-To get started with the ML Pipeline Template, follow these steps:
+To get started with the ML Pipeline Template, follow these steps to deploy the server:
 
 1. Clone the repository:
 ```bash
 $ git clone https://github.com/taiocean1213/ml_pipeline_template.git
 ```
 
-2. Install the required dependencies:
+1. Go into the repository:
 ```bash
-$ pip install -r requirements.txt
+$ cd ml_pipeline_template
 ```
 
-3. Set up your environment variables:
+1. Create and activate the virtual environment:
 ```bash
-$ cp .env.example .env
+$ python3 -m venv venv;source venv/bin/activate
 ```
-Edit the .env file and provide the necessary configuration values.
+
+1. Install the required dependencies:
+```bash
+(venv)$ pip install -r requirements.txt
+```
+
+1. Run the DVC pull command:
+```bash
+(venv)$ dvc pull 
+```
+
+Now the `src/deployment/main.py` is ready to be ran using the python command:
+```bash
+(venv)$ python3 src/deployment/main.py
+```
 
 ## Getting Started
 
@@ -163,4 +177,3 @@ $ dvc checkout
 4. DVC Documentation: [Pulling and Pushing](https://dvc.org/doc/command-reference/pull)
 5. Git Documentation: [Git Clone](https://git-scm.com/docs/git-clone)
 6. Git Documentation: [Git Checkout](https://git-scm.com/docs/git-checkout)
-
